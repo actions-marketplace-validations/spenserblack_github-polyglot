@@ -52,13 +52,13 @@ class GithubPolyglot
 
   # Yields each repository
   def each_repo(&block)
-    repos = @client.repos(username)
-    while repos
-      repos.each(&block)
-      next_query = @client.last_response.rels[:next]
-      break unless next_query
+    page = 1
+    loop do
+      repos = @client.repos(username, query: { page: page })
+      break unless repos && !repos.empty?
 
-      repos = @client.get(next_query.href)
+      repos.each(&block)
+      page += 1
     end
   end
 
