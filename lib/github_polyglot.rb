@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'json'
 require 'octokit'
 
 # Gets language usage stats for a GitHub user.
@@ -34,6 +35,19 @@ class GithubPolyglot
       end
     end
     compiled
+  end
+
+  # Gets the language stats for the user as JSON.
+  def json(pretty: false)
+    options = pretty ? { indent: '  ', space: ' ' } : { indent: '', space: '', array_nl: '', object_nl: '' }
+    JSON.pretty_generate(languages, options)
+  end
+
+  # Prints the languages
+  def print
+    languages.each_pair do |language, amount|
+      puts "#{language}: #{amount}"
+    end
   end
 
   private
