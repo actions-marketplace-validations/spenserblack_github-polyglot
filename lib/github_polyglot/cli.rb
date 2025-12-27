@@ -20,7 +20,7 @@ class GithubPolyglot
 
     def parser
       parser = OptionParser.new
-      parser.on('-u', '-l', '--username', '--login', 'The username/login of the GitHub user') do |value|
+      parser.on('-u USERNAME', '-l', '--username', '--login', 'The username/login of the GitHub user') do |value|
         @username = value
       end
 
