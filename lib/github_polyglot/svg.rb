@@ -6,6 +6,13 @@ require 'nokogiri'
 class GithubPolyglot
   # Generates SVG for language stats
   class SVG
+    # The number of the most popular languages to show. If there are more than this
+    # amount of languages, the least common get grouped under "Other" languages.
+    TOP_LANGUAGES = 6
+
+    # The name of the entry for remaining languages.
+    OTHER_LANGUAGES = :Other
+
     attr_reader :width, :height, :radii
 
     # @param [Hash] languages Maps language name symbols to amounts.
@@ -62,8 +69,7 @@ class GithubPolyglot
     def language_group(xml, mask_id)
       xml.g(mask: "url(##{mask_id})") do
         language_x = 0.0
-
-        sorted_languages.each do |language, amount|
+        summarized_languages.each do |language, amount|
           language_x = language_entry(xml, language_x, language, amount)
         end
       end
@@ -87,15 +93,30 @@ class GithubPolyglot
       @sorted_languages ||= @languages.sort_by { |_, amount| -amount }
     end
 
+    # Returns the language entries, but groups the least popular under `:Other`.
+    def summarized_languages
+      return @summarized_languages if @summarized_languages
+
+      languages = sorted_languages
+      return @summarized_languages = languages if languages.length <= TOP_LANGUAGES
+
+      @summarized_languages = languages.slice(0, TOP_LANGUAGES)
+      @summarized_languages << [OTHER_LANGUAGES, languages[TOP_LANGUAGES..].inject(0) do |total, (_, amount)|
+        total + amount
+      end]
+    end
+
     # Gets the total amount for languages.
     def total_amount
       @total_amount ||= @languages.values.sum.to_f
     end
 
-    # Gets the color as a hex code string for a language.
+    # Gets the color as a hex code string or CSS color for a language.
     #
     # @param [String, Symbol] language The name of the language.
     def color(language)
+      return 'white' if language == OTHER_LANGUAGES
+
       language = language.to_s
 
       Linguist::Language[language]&.color
