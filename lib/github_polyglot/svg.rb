@@ -2,25 +2,33 @@
 
 require 'linguist'
 require 'nokogiri'
+require 'github_polyglot/svg/language_stats'
 
 class GithubPolyglot
   # Generates SVG for language stats
   class SVG
+    include LanguageStats
+
     # Width of the SVG image
     WIDTH = 300
 
     # Height of the language bar
     BAR_HEIGHT = 8
 
+    # Padding underneath the language bar
+    BAR_PADDING = 8
+
     # Radii of rounded elements
     RADII = 5
 
-    # The number of the most popular languages to show. If there are more than this
-    # amount of languages, the least common get grouped under "Other" languages.
-    TOP_LANGUAGES = 6
-
     # The name of the entry for remaining languages.
     OTHER_LANGUAGES = :Other
+
+    # The default color to use if a language doesn't have a color
+    DEFAULT_COLOR = '#EDEDED'
+
+    # The CSS text that gets applied to the SVG.
+    CSS = File.read(File.expand_path('svg.css', __dir__))
 
     # @param [Hash] languages Maps language name symbols to amounts.
     def initialize(languages)
@@ -32,6 +40,7 @@ class GithubPolyglot
       mask_id = 'mask'
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.svg(xmlns: 'http://www.w3.org/2000/svg', width: width, height: height, viewBox: view_box) do
+          xml.style(type: 'text/css') { xml.cdata(CSS) }
           body(xml, mask_id)
         end
       end
@@ -46,7 +55,7 @@ class GithubPolyglot
 
     # Gets the height of the SVG
     def height
-      BAR_HEIGHT
+      BAR_HEIGHT + BAR_PADDING + stats_height
     end
 
     # Gets the radii of rounded elements
@@ -72,6 +81,7 @@ class GithubPolyglot
         mask(xml, mask_id)
       end
       language_group(xml, mask_id)
+      language_stats(xml)
     end
 
     # Builds the mask for the rounded corners.
@@ -97,7 +107,6 @@ class GithubPolyglot
       ratio = amount / total_amount
       language_width = width * ratio
       fill = color(language)
-      return x_offset unless fill
 
       xml.rect(x: x_offset, y: 0, width: language_width, height: BAR_HEIGHT, fill: fill)
 
@@ -131,11 +140,22 @@ class GithubPolyglot
     #
     # @param [String, Symbol] language The name of the language.
     def color(language)
-      return 'white' if language == OTHER_LANGUAGES
+      return DEFAULT_COLOR if language == OTHER_LANGUAGES
 
       language = language.to_s
 
-      Linguist::Language[language]&.color
+      Linguist::Language[language]&.color || DEFAULT_COLOR
+    end
+
+    # Gets the height of the language stats entries.
+    def stats_height
+      stats_rows * STAT_ROW_HEIGHT
+    end
+
+    # Gets the number of rows for language stats entries.
+    def stats_rows
+      # NOTE: + 1 because of the potential extra "Other" entry
+      ((TOP_LANGUAGES + 1) / STATS_COLUMNS.to_f).ceil
     end
   end
 end
