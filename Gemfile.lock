@@ -4,6 +4,7 @@ PATH
     github-polyglot (0.1.0)
       dotenv (~> 3.2)
       faraday-retry (~> 2.4)
+      json (~> 2.18)
       octokit (~> 10.0)
 
 GEM

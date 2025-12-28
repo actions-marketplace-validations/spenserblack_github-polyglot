@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   # NOTE: For octokit
   spec.add_dependency 'faraday-retry', '~> 2.4'
 
+  spec.add_dependency 'json', '~> 2.18'
   spec.add_dependency 'octokit', '~> 10.0'
 end
