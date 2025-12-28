@@ -60,7 +60,7 @@ class GithubPolyglot
 
     # Builds the mask for the rounded corners.
     def mask(xml, id)
-      xml.mask(id: id) do
+      xml.mask('mask-type': 'luminance', id: id) do
         xml.rect(x: 0, y: 0, width: width, height: height, rx: radius, ry: radius, fill: 'white')
       end
     end
