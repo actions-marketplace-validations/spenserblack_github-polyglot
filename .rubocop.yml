@@ -6,7 +6,7 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
   Include:
-    - '**/.rb'
+    - '**/*.rb'
     - '**/*.gemfile'
     - '**/*.gemspec'
     - '**/*.rake'

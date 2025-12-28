@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dotenv'
 require 'optparse'
 
@@ -15,21 +17,24 @@ class GithubPolyglot
       Dotenv.load
 
       token = ENV.fetch(GithubPolyglot::TOKEN_ENV_VAR, nil)
-      polyglot = GithubPolyglot.new(username: @username, token: token)
+      @polyglot = GithubPolyglot.new(username: @username, token: token)
+      output_format
+    end
 
+    private
+
+    def output_format
       case format
       when :print
-        polyglot.print
+        @polyglot.print
       when :json
-        puts polyglot.json(pretty: false)
+        puts @polyglot.json(pretty: false)
       when :'pretty-json'
-        puts polyglot.json(pretty: true)
+        puts @polyglot.json(pretty: true)
       else
         throw NotImplementedError, "Unexpected format: #{format}"
       end
     end
-
-    private
 
     def parser
       parser = OptionParser.new
