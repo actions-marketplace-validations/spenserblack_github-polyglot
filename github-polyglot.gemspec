@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.license                = 'MIT'
 
   spec.require_paths          = ['lib']
+  spec.bindir                 = 'exe'
 
   spec.required_ruby_version  = Gem::Requirement.new('>= 2.7.0')
 
