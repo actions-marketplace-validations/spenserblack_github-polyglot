@@ -1,0 +1,14 @@
+.git/
+bin/
+spec/
+.editorconfig
+.env
+.env.example
+.gitattributes
+.overcommit.yml
+.rspec
+.rubocop.yml
+Gemfile
+Gemfile.lock
+Rakefile
+*.gem
