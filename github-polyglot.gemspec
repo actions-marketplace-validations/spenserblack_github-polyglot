@@ -10,8 +10,10 @@ Gem::Specification.new do |spec|
   spec.homepage               = 'https://github.com/spenserblack/github-polyglot'
   spec.license                = 'MIT'
 
+  spec.files                  = Dir['lib/**/*'] + Dir['exe/*'] + Dir['LICENSE*'] + Dir['README*']
   spec.require_paths          = ['lib']
   spec.bindir                 = 'exe'
+  spec.executables            = ['github-polyglot']
 
   spec.required_ruby_version  = Gem::Requirement.new('>= 3.1')
 
