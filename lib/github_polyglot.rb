@@ -26,13 +26,13 @@ class GithubPolyglot
 
   # Gets language stats for the user.
   def languages
-    compiled = {}
+    compiled = Hash.new(0)
     each_repo do |repo|
       next if repo[:fork]
 
       languages = repo_languages(repo.name)
       languages.to_h.each_pair do |language, size|
-        compiled[language] = size
+        compiled[language] += size
       end
     end
     compiled
