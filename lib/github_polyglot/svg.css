@@ -6,6 +6,13 @@
   --text-color-muted: #59636E;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #D1D7E0;
+    --text-color-muted: #9198A1;
+  }
+}
+
 text, tspan {
   fill: var(--text-color);
 }
