@@ -1,6 +1,8 @@
 .git/
 bin/
 spec/
+.devcontainer/
+.vscode/
 .editorconfig
 .env
 .env.example
