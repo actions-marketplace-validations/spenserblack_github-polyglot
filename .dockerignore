@@ -13,6 +13,7 @@ action/
 .overcommit.yml
 .rspec
 .rubocop.yml
+action.yml
 Gemfile
 Gemfile.lock
 Rakefile

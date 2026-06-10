@@ -1,4 +1,4 @@
-name: GitHub Polyglot
+name: Polyglot
 description: Compile language statistics for a GitHub user
 branding:
   icon: code
@@ -20,7 +20,7 @@ outputs:
     description: The output of the executable
 runs:
   using: docker
-  image: Dockerfile
+  image: action/Dockerfile
   env:
     GITHUB_TOKEN: ${{ inputs.token }}
   args:
