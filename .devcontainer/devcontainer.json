@@ -5,6 +5,12 @@
       "VARIANT": "3.3"
     }
   },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:3": {
+      // NOTE moby is not available on trixie
+      "moby": false
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
