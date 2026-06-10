@@ -1,5 +1,6 @@
 # github-polyglot
 
+[![Gem Version](https://badge.fury.io/rb/github-polyglot.svg)](https://badge.fury.io/rb/github-polyglot)
 [![CI](https://github.com/spenserblack/github-polyglot/actions/workflows/ci.yml/badge.svg)](https://github.com/spenserblack/github-polyglot/actions/workflows/ci.yml)
 
 Linguist, but for the user instead of the repository.
