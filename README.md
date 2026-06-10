@@ -44,7 +44,7 @@ The output of the `github-polyglot` gem.
 ```yaml
 # ...
 steps:
-- uses: spenserblack/github-polyglot/action@main
+- uses: spenserblack/github-polyglot@main
   id: github-polyglot
   with:
     token: ${{ secrets.PAT }}
