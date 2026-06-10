@@ -3,6 +3,7 @@ bin/
 spec/
 .devcontainer/
 .github/
+.ruby-lsp/
 .vscode/
 .editorconfig
 .env
